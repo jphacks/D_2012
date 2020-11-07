@@ -8,6 +8,8 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/line/line-bot-sdk-go/linebot"
+
 	_ "github.com/go-sql-driver/mysql"
 
 	"github.com/jphacks/D_2012/backend/pkg/broadcaster"
@@ -17,9 +19,9 @@ type Response struct {
 	Ratio float64 `json:"ratio"`
 }
 
-type Request struct{
-	UserID      string `json:"userID"`
-	State       string `json:"state"`
+type Request struct {
+	UserID string `json:"userID"`
+	State  string `json:"state"`
 }
 
 type Item struct {
@@ -30,6 +32,7 @@ type Item struct {
 
 type handler struct {
 	pool *sql.DB
+	line *linebot.Client
 }
 
 const prefix = "/v1"
@@ -63,7 +66,7 @@ func (h *handler) handle(w http.ResponseWriter, r *http.Request) {
 
 func (h *handler) handleFake(w http.ResponseWriter, r *http.Request) {
 	now := time.Now().Second()
-	res := Response{Ratio: float64(now)/float64(60)}
+	res := Response{Ratio: float64(now) / float64(60)}
 
 	bytes, err := json.Marshal(res)
 	if err != nil {
@@ -75,30 +78,35 @@ func (h *handler) handleFake(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *handler) handleEnter(w http.ResponseWriter, r *http.Request) {
-	req := &Request{}
-
-	defer r.Body.Close()
-	if err := json.NewDecoder(r.Body).Decode(req); err != nil {
-		w.WriteHeader(http.StatusBadRequest)
-		log.Printf("failed to decode: %v", err)
-		return
+	events, err := h.line.ParseRequest(r)
+	if err != nil {
+		log.Printf("failed to parse line webhook: %v\n", err)
 	}
 
-	if req.UserID == "" {
-		w.WriteHeader(http.StatusBadRequest)
-		log.Println("user id is nil")
-		return
-	}
+	var userID string
+	for _, event := range events {
+		if event.Type == linebot.EventTypeBeacon {
+			beaconEventType := event.Beacon.Type
+			if beaconEventType == linebot.BeaconEventTypeEnter {
+				userID = event.Source.UserID
+				if userID == "" {
+					w.WriteHeader(http.StatusBadRequest)
+					log.Println("user id is nil")
+					return
+				}
 
-	now := time.Now().UTC().Format("2006-01-02 15:04:05")
-	log.Println(now)
+				now := time.Now().UTC().Format("2006-01-02 15:04:05")
+				log.Println(now)
 
-	if _, err := h.pool.Exec(
-		`insert into v1table values (?, ?, 'in') on duplicate key update state='in';`,
-		req.UserID, now); err != nil {
-		log.Println(err)
-		w.WriteHeader(http.StatusBadRequest)
-		return
+				if _, err := h.pool.Exec(
+					`insert into v1table values (?, ?, 'in') on duplicate key update state='in';`,
+					userID, now); err != nil {
+					log.Println(err)
+					w.WriteHeader(http.StatusBadRequest)
+					return
+				}
+			}
+		}
 	}
 
 	fmt.Fprint(w, "ok")
@@ -123,6 +131,13 @@ func NewHandler(mux *http.ServeMux, env broadcaster.ConfigAccessor) {
 	}
 
 	handler.pool = p
+
+	bot, err := env.GetLINEBotClient()
+	if err != nil {
+		log.Fatalln(err)
+
+	}
+	handler.line = bot
 
 	mux.HandleFunc(prefix, handler.handle)
 	mux.HandleFunc(fmt.Sprintf("%s/fake", prefix), handler.handleFake)
