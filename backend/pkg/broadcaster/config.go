@@ -8,7 +8,7 @@ import (
 )
 
 type EnvConfig struct {
-	port            int    `envconfig:"PORT" default:"8080"`
+	Port            int    `envconfig:"PORT" default:"8080"`
 	DBInstance      string `envconfig:"DB_INSTANCE"`
 	DBUser          string `envconfig:"DB_USER"`
 	DBPassword      string `envconfig:"DB_PASSWORD"`
@@ -28,7 +28,7 @@ type ConfigAccessor interface {
 var _ ConfigAccessor = (*EnvConfig)(nil)
 
 func (e *EnvConfig) GetPort() int {
-	return e.port
+	return e.Port
 }
 
 func (e *EnvConfig) GetPooledDBConn() (*sql.DB, error) {
