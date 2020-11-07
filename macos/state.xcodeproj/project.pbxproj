@@ -12,8 +12,6 @@
 		3904C903254D1B0E00F64CC5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3904C902254D1B0E00F64CC5 /* Assets.xcassets */; };
 		3904C906254D1B0E00F64CC5 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3904C905254D1B0E00F64CC5 /* Preview Assets.xcassets */; };
 		3904C909254D1B0E00F64CC5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3904C907254D1B0E00F64CC5 /* Main.storyboard */; };
-		3904C915254D1B0E00F64CC5 /* stateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3904C914254D1B0E00F64CC5 /* stateTests.swift */; };
-		3904C920254D1B0E00F64CC5 /* stateUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3904C91F254D1B0E00F64CC5 /* stateUITests.swift */; };
 		3904C932254D565100F64CC5 /* EzHTTP in Frameworks */ = {isa = PBXBuildFile; productRef = 3904C931254D565100F64CC5 /* EzHTTP */; };
 /* End PBXBuildFile section */
 
@@ -44,11 +42,7 @@
 		3904C90A254D1B0E00F64CC5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3904C90B254D1B0E00F64CC5 /* state.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = state.entitlements; sourceTree = "<group>"; };
 		3904C910254D1B0E00F64CC5 /* stateTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = stateTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		3904C914254D1B0E00F64CC5 /* stateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = stateTests.swift; sourceTree = "<group>"; };
-		3904C916254D1B0E00F64CC5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3904C91B254D1B0E00F64CC5 /* stateUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = stateUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		3904C91F254D1B0E00F64CC5 /* stateUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = stateUITests.swift; sourceTree = "<group>"; };
-		3904C921254D1B0E00F64CC5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,8 +75,6 @@
 			isa = PBXGroup;
 			children = (
 				3904C8FD254D1B0E00F64CC5 /* state */,
-				3904C913254D1B0E00F64CC5 /* stateTests */,
-				3904C91E254D1B0E00F64CC5 /* stateUITests */,
 				3904C8FC254D1B0E00F64CC5 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -117,24 +109,6 @@
 				3904C905254D1B0E00F64CC5 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
-			sourceTree = "<group>";
-		};
-		3904C913254D1B0E00F64CC5 /* stateTests */ = {
-			isa = PBXGroup;
-			children = (
-				3904C914254D1B0E00F64CC5 /* stateTests.swift */,
-				3904C916254D1B0E00F64CC5 /* Info.plist */,
-			);
-			path = stateTests;
-			sourceTree = "<group>";
-		};
-		3904C91E254D1B0E00F64CC5 /* stateUITests */ = {
-			isa = PBXGroup;
-			children = (
-				3904C91F254D1B0E00F64CC5 /* stateUITests.swift */,
-				3904C921254D1B0E00F64CC5 /* Info.plist */,
-			);
-			path = stateUITests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -282,7 +256,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3904C915254D1B0E00F64CC5 /* stateTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -290,7 +263,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3904C920254D1B0E00F64CC5 /* stateUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
