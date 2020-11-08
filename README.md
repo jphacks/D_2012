@@ -1,4 +1,4 @@
-# EXmarker-拠点状況可視化ツール
+# EXmarker 拠点状況可視化ツール
 
 ![Exmarker](EXmarker.png)
 
